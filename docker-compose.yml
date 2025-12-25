@@ -1,5 +1,17 @@
 
 services:
+  mongo:
+   image: "mongo:8.2.3"
+   container_name: blog_db
+   ports:
+    - "27217:27017"
+   volumes:
+    - mongo_blog_data:/data/db
+   networks:
+    - backend
+   logging:
+    driver: "none"
+
   app:
    build: 
       context: .
@@ -12,14 +24,15 @@ services:
     - ./src:/app/src
     - ./package.json:/app/package.json
     - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+   depends_on:
+    - mongo
+   networks:
+     - backend
 
-  mongo:
-   image: "mongo:8.2.3"
-   container_name: blog_db
-   ports:
-    - "27217:27017"
-   volumes:
-    - mongo_blog_data:/data/db
-
+  
 volumes:
   mongo_blog_data:
+
+networks:
+  backend:
+    driver: bridge
