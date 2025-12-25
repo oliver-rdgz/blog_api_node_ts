@@ -1,0 +1,25 @@
+
+services:
+  app:
+   build: 
+      context: .
+      dockerfile: Dockerfile
+   image: my_blog:1.0
+   container_name: blog
+   ports:
+    - "3500:3120"
+   volumes:
+    - ./src:/app/src
+    - ./package.json:/app/package.json
+    - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+
+  mongo:
+   image: "mongo:8.2.3"
+   container_name: blog_db
+   ports:
+    - "27217:27017"
+   volumes:
+    - mongo_blog_data:/data/db
+
+volumes:
+  mongo_blog_data:

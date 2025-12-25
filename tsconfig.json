@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // O "ESNext", "ES6" para navegadores más antiguos
+    "module": "commonjs", // O "ESNext", "NodeNext" si usas ES Modules
+    "rootDir": "./src", // Carpeta de código fuente
+    "outDir": "./dist", // Carpeta de salida del JS compilado
+    // "strict": true, // Habilita un conjunto de comprobaciones estrictas
+    "esModuleInterop": true, // Mejora la interoperabilidad con módulos JS
+    "skipLibCheck": true, // Omite la comprobación de tipos en archivos de librería
+    "forceConsistentCasingInFileNames": true, // Asegura nombres de archivo consistentes
+    "resolveJsonModule": true // Permite importar archivos .json
+  },
+  "include": ["src/**/*"], // Incluye todos los archivos .ts en la carpeta src
+  "exclude": ["node_modules", "dist"] // Excluye carpetas irrelevantes
+}
