@@ -1,12 +1,15 @@
 import http from 'node:http';
-import express from 'express';
+import express, { json } from 'express';
 import { DataBaseMongo } from './database';
+import { postRouter } from './post/router';
 
 const app: express.Application = express();
 const PORT: number = 3120;
 
 DataBaseMongo.connection();
-app.get('/', (req, res) => res.status(200).json('ok'));
+app.use(json());
+app.get('/ok', (req, res) => res.status(200).json('ok'));
+app.use(postRouter);
 
 const server_node = http.createServer(app);
 
