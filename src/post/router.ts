@@ -85,6 +85,8 @@ router.get(`${path_admin}/pagination-post`, async (req, res) => {
 		const filterQuery: PostPagination = {
 			title: req.query.title ? req.query.title.toString() : null,
 			content: req.query.content ? req.query.content.toString() : null,
+			page: schemaPagination.data.page,
+			pageSize: schemaPagination.data.pageSize,
 		};
 		if (req.query.date) {
 			const dateFilter = req.query.date;

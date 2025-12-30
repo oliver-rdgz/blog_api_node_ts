@@ -1,10 +1,5 @@
 import { Schema, model } from 'mongoose';
-import {
-	DateRangeT,
-	PostCreateT,
-	PostPagination,
-	PostUpdateT,
-} from './types';
+import { DateRangeT, PostCreateT, PostPagination, PostUpdateT } from './types';
 import { v4 as uuid } from 'uuid';
 
 const schemaPost = new Schema({
@@ -44,7 +39,7 @@ export class PostRepository {
 
 	static async pagination(filter: PostPagination) {
 		const filterText = { $or: [] };
-		const filterDate = { created: undefined };
+		const filterDate = {} as { created: unknown };
 		if (filter.title) {
 			filterText['$or'].push({
 				title: { $regex: filter.title, $options: 'i' },
@@ -62,11 +57,14 @@ export class PostRepository {
 				$lt: dateFilter.end,
 			};
 		}
-		const postPagination = await PostRepository.model.find({
-			...filterText,
-			...filterDate,
-			deleted: false,
-		});
+		const postPagination = await PostRepository.model
+			.find({
+				...filterText,
+				...filterDate,
+				deleted: false,
+			})
+			.skip((filter.page - 1) * filter.pageSize)
+			.limit(filter.pageSize);
 		return postPagination;
 	}
 }

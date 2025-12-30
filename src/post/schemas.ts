@@ -91,7 +91,7 @@ const paginationSchema = Joi.object({
 		.optional()
 		.messages({
 			'alternatives.types': 'La fecha enviada no es valida',
-			'date.format': 'La fecha debe tener un formato AAAA-MM-DD'
+			'date.format': 'La fecha debe tener un formato AAAA-MM-DD',
 		}),
 	page: Joi.number()
 		.min(1)
@@ -122,7 +122,7 @@ export class ValidateSchemaPost {
 				detail: [...error.details],
 			};
 		}
-		return { success: true, data: value as PostCreateT };
+		return { success: true, data: value as PostCreateT & PostPagination };
 	}
 	create(data: PostCreateT) {
 		const schemaValidated = createSchema.validate(data);
