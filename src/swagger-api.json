@@ -1,0 +1,218 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "v1.0.0",
+		"title": "Blog API",
+		"description": "Un CRUD de articulos para operaciones principales, bases de datos (NoSQL), API RESTful del lado del servidor"
+	},
+	"host": "localhost:3500",
+	"basePath": "/",
+	"schemes": ["http", "https"],
+	"paths": {
+		"/api/create-post": {
+			"post": {
+				"description": "Crear un Post",
+				"tags": ["Post"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Post-Create"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/api/get-post/{postId}": {
+			"get": {
+				"description": "Obtener un post usando su ID",
+				"tags": ["Post"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Param-id"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/pagination-post": {
+			"get": {
+				"description": "Paginar los posts",
+				"tags": ["Post"],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "title",
+            "type": "string",
+						"description": "Titulo del post"
+					},
+					{
+						"in": "query",
+						"name": "content",
+            "type": "string",
+						"description": "Contenido del post"
+					},
+					{
+						"in": "query",
+						"name": "date",
+            "type": "string",
+						"description": "Fecha para filtrar por semana, mes o un día en especifico los valores pueden ser: month | week | 2025-12-31"
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"type": "integer",
+						"description": "Pagina del post, debe ser mayor a 1"
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+            "type": "integer",
+						"description": "Tamaño de la pagina del post, debe ser mayor a 3 "
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/api/update-post/{postId}": {
+			"patch": {
+				"description": "Actualizar un post usando su ID",
+				"tags": ["Post"],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Post-Update"
+						}
+					},
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Param-id"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/delete-post/{postId}": {
+			"delete": {
+				"description": "Eliminar un post usando su ID",
+				"tags": ["Post"],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "postId",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Param-id"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		}
+	},
+
+	"definitions": {
+		"Post-Create": {
+			"required": ["title", "content"],
+			"properties": {
+				"title": {
+					"type": "string",
+					"example": "Mi primer post",
+					"description": "Titulo del post"
+				},
+				"content": {
+					"type": "string",
+					"example": "Contenido para swagger el primer post",
+					"description": "Contenido del post"
+				},
+				"img": {
+					"type": "string",
+					"example": "https://st2.depositphotos.com/3369547/9056/v/950/depositphotos_90562800-stock-illustration-blog-blogging-and-blogglers-theme.jpg",
+					"description": "Imagen del post"
+				}
+			}
+		},
+		"Post-Update": {
+			"properties": {
+				"title": {
+					"type": "string",
+					"example": "Mi post actualizado",
+					"description": "Titulo del post"
+				},
+				"content": {
+					"type": "string",
+					"example": "Actualizando el contenido para swagger en un post",
+					"description": "Contenido del post"
+				},
+				"img": {
+					"type": "string",
+					"example": "https://st2.depositphotos.com/3369547/9056/v/950/depositphotos_90562800-stock-illustration-blog-blogging-and-blogglers-theme.jpg",
+					"description": "Imagen del post"
+				}
+			}
+		},
+		"Param-id": {
+			"type": "string",
+			"format": "uuid"
+		}
+	}
+}
