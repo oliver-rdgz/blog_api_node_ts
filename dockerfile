@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-COPY src *.json *.mts ./
+COPY src *.json *.mts jest.config.ts ./
 
 RUN pnpm i
 

@@ -13,4 +13,8 @@ export class DataBaseMongo {
 			throw Error(e);
 		}
 	}
+
+	static async disconnect() {
+		await DataBaseMongo.link.disconnect();
+	}
 }

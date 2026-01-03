@@ -3,7 +3,7 @@ export type DateRangeT = {
 	end: Date;
 };
 
-export type PostT = {
+type PostT = {
 	id: string;
 	title: string;
 	img: string;
@@ -14,7 +14,7 @@ export type PostT = {
 	updateAt: Date;
 };
 
-type PostPagiantionT = {
+type PaginationT = {
 	page?: number;
 	pageSize?: number;
 };
@@ -31,4 +31,4 @@ export type PostUpdateT = Partial<
 export type PostPagination = Partial<
 	Pick<PostT, 'title' | 'content' | 'date'>
 > &
-	PostPagiantionT;
+	PaginationT;

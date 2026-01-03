@@ -4,7 +4,6 @@
     "module": "commonjs", // O "ESNext", "NodeNext" si usas ES Modules
     "rootDir": "./src", // Carpeta de código fuente
     "outDir": "./dist", // Carpeta de salida del JS compilado
-    // "strict": true, // Habilita un conjunto de comprobaciones estrictas
     "esModuleInterop": true, // Mejora la interoperabilidad con módulos JS
     "skipLibCheck": true, // Omite la comprobación de tipos en archivos de librería
     "forceConsistentCasingInFileNames": true, // Asegura nombres de archivo consistentes

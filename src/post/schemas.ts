@@ -141,7 +141,6 @@ export class ValidateSchemaPost {
 
 	pagination(data: PostPagination) {
 		const schemaValidated = paginationSchema.validate(data);
-		console.log(schemaValidated.error);
 		return this.validationResponse(schemaValidated);
 	}
 }

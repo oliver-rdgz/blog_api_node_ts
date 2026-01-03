@@ -15,13 +15,3 @@ const file = './swagger-api.json';
 const endpoints = ['src/post/router.ts'];
 
 generateSwagger()(file, endpoints, docData);
-				// "parameters": [
-				// 	{
-        //     "in":"body",
-				// 		"name": "body",
-				// 		"required": true,
-				// 		"schema": {
-				// 			"$ref": "#/definitions/Post"
-				// 		}
-				// 	}
-				// ],
