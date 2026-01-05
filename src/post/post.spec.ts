@@ -7,14 +7,23 @@ import { v4 as uuid } from 'uuid';
 const app = express();
 app.use(json());
 app.use(postRouter);
+let idPostDelete;
 let idPost;
+
 const idWrong = uuid();
 
 beforeAll(async () => {
 	await DataBaseMongo.connection();
 	const post = (await request.get('/api/pagination-post')).body;
-	if (post) if (post.data[0]) idPost = post.data[0]._id;
-	if (!idPost) idPost = uuid();
+	if (post) {
+		if (post.data[0]) idPostDelete = post.data[0]._id;
+		else idPostDelete = uuid();
+		if (post.data[1]) idPost = post.data[1]._id;
+		else idPost = uuid();
+	} else {
+		idPostDelete = uuid();
+		idPost = uuid();
+	}
 });
 afterAll(async () => {
 	await DataBaseMongo.disconnect();
@@ -121,7 +130,7 @@ describe('update', () => {
 describe('delete', () => {
 	it('post in DB - 200', async () => {
 		const expected = 200;
-		const res = await request.delete(`/api/delete-post/${idPost}`);
+		const res = await request.delete(`/api/delete-post/${idPostDelete}`);
 		if (res.status === 404)
 			console.log(
 				'Se debe eliminar un post activo con un Id de la base de datos'
