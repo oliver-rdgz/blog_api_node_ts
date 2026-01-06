@@ -1,8 +1,9 @@
 import { Schema, model } from 'mongoose';
 import { DateRangeT, PostCreateT, PostPagination, PostUpdateT } from './types';
 import { v4 as uuid } from 'uuid';
+import { PostOutput } from './adapters';
 
-const schemaPost = new Schema({
+export const schemaPost = new Schema({
 	_id: { type: String, required: true, default: uuid },
 	title: { type: String, require: false },
 	img: { type: String, require: false },
@@ -17,10 +18,11 @@ schemaPost.pre('save', function async() {
 });
 
 export class PostRepository {
+	private static output = new PostOutput();
 	private static model = model('Post', schemaPost);
 	static async create(...post: PostCreateT[]) {
 		const created = await PostRepository.model.create(post);
-		return created;
+		return PostRepository.output.create(created);
 	}
 
 	static async getOne(id: string) {
@@ -28,13 +30,13 @@ export class PostRepository {
 			_id: id,
 			deleted: false,
 		});
-		return post;
+		return PostRepository.output.detail(post);
 	}
 	static async updateOne(id: string, data: PostUpdateT) {
 		const postUpdated = await PostRepository.model.findByIdAndUpdate(id, data, {
 			new: true,
 		});
-		return postUpdated;
+		return PostRepository.output.update(postUpdated);
 	}
 
 	static async pagination(filter: PostPagination) {
@@ -65,6 +67,6 @@ export class PostRepository {
 			})
 			.skip((filter.page - 1) * filter.pageSize)
 			.limit(filter.pageSize);
-		return postPagination;
+		return PostRepository.output.pagination(postPagination);
 	}
 }
